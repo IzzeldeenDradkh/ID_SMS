@@ -184,7 +184,7 @@ function Invoke-HardwareDashboard {
         Write-Host "   -> Cores/Threads: $($c.NumberOfCores) cores / $($c.NumberOfLogicalProcessors) threads" -ForegroundColor DarkGray;
         Write-Host "   -> Max Clock    : $($c.MaxClockSpeed) MHz" -ForegroundColor DarkGray;
     }
-    Write-Host "   -> Current Load : ${cpuLoad}% (this is usage, not a wear/health metric — CPUs have no meaningful 'health %')`n" -ForegroundColor Green;
+    Write-Host "   -> Current Load : ${cpuLoad}% (this is usage, not a wear/health metric Â— CPUs have no meaningful 'health %')`n" -ForegroundColor Green;
 
     # 2. RAM
     $os = Get-CimInstance Win32_OperatingSystem;
@@ -203,7 +203,7 @@ function Invoke-HardwareDashboard {
     }
     Write-Host "   -> Usage        : $usedRamGB GB / $totalRamGB GB (${ramUsagePercent}%)`n" -ForegroundColor Green;
 
-    # 3. Storage — split into physical drive HEALTH and logical volume FREE SPACE (these are not the same thing)
+    # 3. Storage Â— split into physical drive HEALTH and logical volume FREE SPACE (these are not the same thing)
     Write-Host " [STORAGE - PHYSICAL DRIVES]" -ForegroundColor Cyan;
     $physicalDisks = Get-PhysicalDisk -ErrorAction SilentlyContinue;
     if ($physicalDisks) {
@@ -227,7 +227,7 @@ function Invoke-HardwareDashboard {
     }
 
     Write-Host "`n [STORAGE - VOLUME FREE SPACE]" -ForegroundColor Cyan;
-    Write-Host "   (Free space % is NOT drive health — a full but healthy drive shows low free space here)" -ForegroundColor DarkGray;
+    Write-Host "   (Free space % is NOT drive health Â— a full but healthy drive shows low free space here)" -ForegroundColor DarkGray;
     $disks = Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3";
     foreach ( $disk in $disks ) {
         $sizeGB = [math]::Round($disk.Size / 1GB, 1);
@@ -276,7 +276,7 @@ function Invoke-DeviceTimeline {
     Write-Host "===================================================" -ForegroundColor Gray;
     Write-Host "        AetherOrigin Device Timeline                " -ForegroundColor Gray;
     Write-Host "===================================================`n" -ForegroundColor Gray;
-    Write-Host "   None of these is a single 'true' answer — each measures" -ForegroundColor DarkGray;
+    Write-Host "   None of these is a single 'true' answer Â— each measures" -ForegroundColor DarkGray;
     Write-Host "   something different, and reimaging/resets can reset them." -ForegroundColor DarkGray;
     Write-Host "";
 
@@ -286,7 +286,7 @@ function Invoke-DeviceTimeline {
         $os = Get-CimInstance Win32_OperatingSystem -ErrorAction Stop;
         $installDate = $os.InstallDate;
         Write-Host "   -> $installDate" -ForegroundColor Green;
-        Write-Host "      (When this copy of Windows was installed/imaged — not" -ForegroundColor DarkGray;
+        Write-Host "      (When this copy of Windows was installed/imaged Â— not" -ForegroundColor DarkGray;
         Write-Host "       necessarily when you first used the device.)`n" -ForegroundColor DarkGray;
     } catch {
         Write-Host "   -> Unable to retrieve.`n" -ForegroundColor DarkRed;
@@ -300,7 +300,7 @@ function Invoke-DeviceTimeline {
         $HighPart = [BitConverter]::ToInt64($FileTime, 0);
         $OobeDate = [DateTime]::FromFileTimeUtc($HighPart);
         Write-Host "   -> $OobeDate (UTC)" -ForegroundColor Green;
-        Write-Host "      (When the initial out-of-box setup finished — often close" -ForegroundColor DarkGray;
+        Write-Host "      (When the initial out-of-box setup finished Â— often close" -ForegroundColor DarkGray;
         Write-Host "       to the real 'first power-on' moment.)`n" -ForegroundColor DarkGray;
     } catch {
         Write-Host "   -> Not available on this system/Windows build.`n" -ForegroundColor DarkRed;
@@ -314,7 +314,7 @@ function Invoke-DeviceTimeline {
         foreach ( $p in $Profiles ) {
             Write-Host "   -> $($p.Name)  : $($p.CreationTime)" -ForegroundColor Green;
         }
-        Write-Host "      (Approximates when each account first signed in — resets" -ForegroundColor DarkGray;
+        Write-Host "      (Approximates when each account first signed in Â— resets" -ForegroundColor DarkGray;
         Write-Host "       if the profile was ever deleted/recreated.)`n" -ForegroundColor DarkGray;
     } catch {
         Write-Host "   -> Unable to retrieve.`n" -ForegroundColor DarkRed;
@@ -327,7 +327,7 @@ function Invoke-DeviceTimeline {
         Write-Host "   -> Manufacturer : $($bios.Manufacturer)" -ForegroundColor Green;
         Write-Host "   -> Release Date : $($bios.ReleaseDate)" -ForegroundColor Green;
         Write-Host "   -> Serial No.   : $($bios.SerialNumber)" -ForegroundColor Green;
-        Write-Host "      (Closest thing to actual hardware age — unaffected by" -ForegroundColor DarkGray;
+        Write-Host "      (Closest thing to actual hardware age Â— unaffected by" -ForegroundColor DarkGray;
         Write-Host "       Windows reinstalls.)`n" -ForegroundColor DarkGray;
     } catch {
         Write-Host "   -> Unable to retrieve.`n" -ForegroundColor DarkRed;
